@@ -1,0 +1,4 @@
+GET http://localhost:4004/odata/v4/lol/ultimasPartidas
+Content-Type: application/json
+
+{ "gameName": "Tio Axel", "tagLine": "BnTk", "region": "americas" }

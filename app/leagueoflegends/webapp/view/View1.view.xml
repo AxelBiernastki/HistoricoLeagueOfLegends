@@ -1,0 +1,168 @@
+<mvc:View
+  controllerName="historico.lol.leagueoflegends.controller.View1"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Page id="pageId" showHeader="false">
+    <content>
+    <Toolbar id="cabecalho" class="cabecalho">
+            <HBox id="hBoxCabecalho" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+                <HBox id="hboxEsquerdaNf" alignItems="Center">
+                    <Image id="logoTopoNf"
+                          src="./imgs/logoLol-removebg-preview.png"
+                          height="4rem"
+                          width="auto"
+                          class="sapUiTinyMarginBegin" />
+                </HBox>
+                <HBox id="hboxCentroNf" width="100%" justifyContent="Center">
+                    <Text id="tituloCabecalhoNf"
+                          text="Histórico de Partidas"
+                          class="cabecalhoTexto" />
+                </HBox>
+                <HBox id="hboxDireita" alignItems="Center">
+                    <Image id="iconeChallenger"
+                          src="./imgs/LogoChallenger-removebg-preview.png"
+                          height="4rem"
+                          width="auto"
+                          class="sapUiSmallMarginEnd" />
+                </HBox>
+            </HBox>
+        </Toolbar>
+      <VBox class="teste" height="58rem">
+        <HBox alignItems="Center" class="sapUiSmallMarginTop" renderType="Bare" wrap="Wrap">
+          <Input id="inpRiotId"
+       placeholder="NickName #Tag"
+       width="12rem"
+       class="sapUiSmallMarginBegin"
+       showSuggestion="true"
+       filterSuggests="false"
+       suggestionItems="{vh>/recent}"
+       suggestionItemSelected=".onSugestaoSelecionada">
+  <suggestionItems>
+    <core:Item key="{vh>key}" text="{vh>riotId}"/>
+  </suggestionItems>
+</Input>
+          <Select id="selRegion" width="7rem" selectedKey="BR1" class="sapUiTinyMarginBegin">
+            <items>
+              <core:Item key="BR1"  text="BR1"/>
+              <core:Item key="NA1"  text="NA1"/>
+              <core:Item key="LA1"  text="LA1"/>
+              <core:Item key="LA2"  text="LA2"/>
+
+              <core:Item key="EUW1" text="EUW1"/>
+              <core:Item key="EUN1" text="EUN1"/>
+              <core:Item key="TR1"  text="TR1"/>
+              <core:Item key="RU"   text="RU"/>
+
+              <core:Item key="KR"   text="KR"/>
+              <core:Item key="JP1"  text="JP1"/>
+
+              <core:Item key="OC1"  text="OC1"/>
+              <core:Item key="SG2"  text="SG2"/>
+              <core:Item key="PH2"  text="PH2"/>
+              <core:Item key="TH2"  text="TH2"/>
+              <core:Item key="TW2"  text="TW2"/>
+              <core:Item key="VN2"  text="VN2"/>
+            </items>
+          </Select>
+          <Button text="Buscar" class="sapUiTinyMarginBegin" press=".onBuscar" enabled="{= !${vm>/busy} }"/>
+        </HBox>
+<VBox width="100%" alignItems="Center"> 
+        <Table id="tblMatches" width="60rem" fixedLayout="true" items="{vm>/rows}" class="sapUiSmallMarginTop myFixedTable" growing="true" growingScrollToLoad="true">
+  <headerToolbar >
+    <Toolbar class="headerTabela">
+      <Title id="txtTabela" text="Últimas 10 partidas" class="texto"/>
+      <ToolbarSpacer/>
+          <Text class="texto" text="Modo de Jogo"></Text>
+          <Select id="selModoDeJogo" width="7rem" selectedKey="todos" class="sapUiTinyMarginBegin" change=".onFiltroModo">
+            <items>
+              <core:Item key="todos" text="Todos"/>
+              <core:Item key="soloq" text="SoloQ"/>
+              <core:Item key="flex"  text="Flex"/>
+              <core:Item key="clash"  text="Clash"/>
+              <core:Item key="aram"  text="Aram"/>
+              <core:Item key="arena" text="Arena"/>
+            </items>
+          </Select>
+    </Toolbar>
+  </headerToolbar>
+
+  <columns>
+    <Column width="10rem" importance="High" hAlign="Center"><Text text="Campeão"/></Column>
+    <Column width="10rem" importance="High" hAlign="Center"><Text text="Resultado"/></Column>
+    <Column width="10rem" importance="High" hAlign="Center"><Text text="KDA"/></Column>
+    <Column width="10rem" importance="High" hAlign="Center"><Text text="Tempo"/></Column>
+    <Column width="10rem" importance="High" hAlign="Center"><Text text="Data"/></Column>
+    <Column width="8rem" importance="High" hAlign="Center"><Text text="Modo de Jogo"/></Column>
+    
+    
+    <!-- Opcional: PDL ±
+    <Column width="7rem"><Text text="PDL ±"/></Column>
+    -->
+  </columns>
+
+  <items>
+    <ColumnListItem>
+
+      <VBox alignItems="Center">
+  <HBox alignItems="Center">
+    <Image src="{vm>championImg}" width="43px" height="40px" tooltip="{vm>champion}"/>
+  </HBox>
+  <HBox alignItems="Center" justifyContent="Start">
+    <Image src="{vm>spell1_img}" width="18px" height="18px"  tooltip="{vm>spell1_name}"/>
+    <Image src="{vm>spell2_img}" width="18px" height="18px" class="sapUiTinyMarginBegin" tooltip="{vm>spell2_name}"/>
+  </HBox>
+</VBox>
+
+      
+      <ObjectStatus text="{vm>result}" state="{= ${vm>result} === 'Win' ? 'Success' : 'Error' }"/>
+
+      <Text text="{vm>kda}" />
+
+      <Text text="{= ${vm>durationMin} + ' min' }"/>
+
+      <Text text="{ path: 'vm>gameStart', formatter: '.fmtDate' }"/>
+
+      <Text text="{vm>gameType}" />
+    
+    </ColumnListItem>
+  </items>
+</Table>
+</VBox>
+
+      </VBox>
+    </content>
+
+    <footer>
+    <OverflowToolbar>
+      <!-- Atualizar -->
+      <Button
+        icon="sap-icon://refresh"
+        text="Atualizar"
+        type="Transparent"
+        press=".onRefresh"
+        enabled="{= !${vm>/busy} }"/>
+
+      <ToolbarSeparator/>
+
+      <ToolbarSpacer/>
+
+      <!-- Erro (se houver) -->
+      <ObjectStatus
+        state="Error"
+        text="{vm>/error}"
+        visible="{= !!${vm>/error} }"/>
+
+      <!-- Última atualização -->
+      <Text text="{= ${vm>/lastUpdated} ? 'Atualizado: ' + ${vm>/lastUpdated} : '' }"/>
+
+      <!-- Voltar ao topo -->
+      <Button
+        icon="sap-icon://arrow-top"
+        type="Transparent"
+        tooltip="Voltar ao topo"
+        press=".onScrollTop"/>
+    </OverflowToolbar>
+  </footer>
+  </Page>
+</mvc:View>

@@ -1,0 +1,1 @@
+using LolService as service from '../../srv/service';

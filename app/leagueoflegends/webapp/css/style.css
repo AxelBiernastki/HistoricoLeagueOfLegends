@@ -1,0 +1,34 @@
+.cabecalho {
+    height: 4rem !important;
+    background-color: #e2e2e2;
+}
+
+.cabecalhoTexto {
+    font-family: "EB Garamond", serif;
+    font-size: 3rem;
+}
+
+.myFixedTable {
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 2px #404040;
+}
+
+.texto {
+  color: white !important;
+  font-size: 1.5rem !important;
+  font-weight: 500;
+  font-family: "EB Garamond", serif !important;
+}
+
+.teste {
+  background-image: url("../imgs/novo-logo-league-of-legends.webp");
+  background-size: cover;       
+  background-repeat: no-repeat; 
+  background-position: center;  
+}
+
+.headerTabela {
+  background-color: #404040 !important;
+  border-radius: 0px !important;
+}
