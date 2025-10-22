@@ -82,28 +82,33 @@
     "routing": {
       "config": {
         "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
+        "viewPath": "historico.lol.leagueoflegends.view",
         "controlId": "app",
-        "transition": "slide",
-        "type": "View",
-        "viewType": "XML",
-        "path": "historico.lol.leagueoflegends.view",
+        "controlAggregation": "pages",
         "async": true,
-        "viewPath": "historico.lol.leagueoflegends.view"
+        "viewType": "XML",
+        "transition": "slide"
       },
       "routes": [
         {
-          "name": "RouteView1",
-          "pattern": ":?query:",
+          "name": "home",
+          "pattern": "",
           "target": [
-            "TargetView1"
+            "View1"
+          ]
+        },
+        {
+          "name": "player",
+          "pattern": "{summoner}",
+          "target": [
+            "View1"
           ]
         }
       ],
       "targets": {
-        "TargetView1": {
+        "View1": {
           "id": "View1",
-          "name": "View1"
+          "viewName": "View1"
         }
       }
     },

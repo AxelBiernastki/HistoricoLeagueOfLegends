@@ -384,6 +384,20 @@ module.exports = cds.service.impl((srv) => {
         const spell2_img = spellImgUrl(Number(p.summoner2Id || 0), patch);
         const rune_img = runeImgUrl(Number(runeMain || 0));
 
+        const spell1_name = (SUMMONER_SPELLS[s1]?.name) || "";
+        const spell2_name = (SUMMONER_SPELLS[s2]?.name) || "";
+        const runeMainName = (() => {
+          const map = {
+            8005: "Pressione o Ataque", 8008: "Ritmo Fatal", 8010: "Conquistador", 8021: "Agilidade nos Pés",
+            8112: "Eletrocutar", 8124: "Predador", 8128: "Colheita Sombria", 9923: "Chuva de Lâminas",
+            8214: "Invocar Aery", 8229: "Cometa Arcano", 8230: "Ímpeto Gradual",
+            8437: "Aperto dos Mortos Vivos", 8439: "Pós-Choque", 8465: "Guardião",
+            8351: "Aprimoramento Glacial", 8360: "Livro de Feitiços Deslacrado", 8369: "Primeiro Ataque"
+          };
+          return map[Number(runeMain || 0)] || "";
+        })();
+
+
         return {
           teamId: Number(p.teamId ?? 0),
           win: !!p.win,
@@ -394,7 +408,17 @@ module.exports = cds.service.impl((srv) => {
           itemsImgs,
           spell1_img,
           spell2_img,
-          rune_img
+          spell1_id: s1, 
+          spell1_name,
+          spell2_id: s2, 
+          spell2_name,
+          rune_img, 
+          runeMain, 
+          runeMainName,
+          puuid: String(p.puuid || ""),
+          riotIdGameName: String(p.riotIdGameName || ""),
+          riotIdTagLine: String(p.riotIdTagLine || p.riotIdTagline || ""),
+          resolvedRegion: reg
         };
 
       });

@@ -12,7 +12,7 @@
                           src="./imgs/logoLol-removebg-preview.png"
                           height="4rem"
                           width="auto"
-                          class="sapUiTinyMarginBegin" />
+                          class="sapUiTinyMarginBegin logo-branca"/>
                 </HBox>
                 <HBox id="hboxCentroNf" width="100%" justifyContent="Center">
                     <Text id="tituloCabecalhoNf"
@@ -24,7 +24,7 @@
                           src="./imgs/LogoChallenger-removebg-preview.png"
                           height="4rem"
                           width="auto"
-                          class="sapUiSmallMarginEnd" />
+                          class="sapUiSmallMarginEnd sapUiSmallMarginTop" />
                 </HBox>
             </HBox>
         </Toolbar>

@@ -21,16 +21,22 @@ service LolService {
   }
 
   type ParticipantSumary {
-    teamId       : Integer;
-    win          : Boolean;
-    summonerName : String;
-    champion     : String;
-    championImg  : String;
-    kda          : String;
-    itemsImgs    : array of String;
-    spell1_img   : String;
-    spell2_img   : String;
-    rune_img     : String;
+    teamId         : Integer;
+    win            : Boolean;
+    summonerName   : String;
+    champion       : String;
+    championImg    : String;
+    kda            : String;
+    itemsImgs      : array of String;
+    spell1_img     : String;
+    spell2_img     : String;
+    rune_img       : String;
+    runeMain       : Integer;
+    runeMainName   : String;
+    puuid          : String;
+    riotIdGameName : String;
+    riotIdTagLine  : String;
+    resolvedRegion : String;
   }
 
   function ultimasPartidas(gameName: String, tagLine: String, region: String) returns array of MatchSummary;

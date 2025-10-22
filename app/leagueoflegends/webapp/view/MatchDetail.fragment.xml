@@ -1,9 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
   <Dialog id="dlgMatchDetail"
           title="{dlg>/title}"
+          titleAlignment="Center"
           contentWidth="1000px"
-          contentHeight="770px"
-          stretch="{= ${device>/system/phone} }"
+          contentHeight="705px"
           class="sapUiNoContentPadding fragmentteste">
 
     <VBox class="sapUiSmallMargin" fitContainer="true">
@@ -11,7 +11,7 @@
 
         <!-- ================= TIME AZUL ================= -->
         <VBox width="47%">
-          <Title text="Time Azul" level="H4" class="sapUiSmallMarginBottom"/>
+          <Title text="Time Azul" level="H4" width="100%" textAlign="Begin" class="sapUiSmallMarginBottom titleBlue"/>
           <VBox items="{dlg>/team100}">
             <items>
               <HBox alignItems="Center"
@@ -19,30 +19,28 @@
                     class="sapUiTinyMarginBottom playerRow"
                     width="100%">
 
-                <!-- Campeão + Nome (esquerda) -->
-                <HBox alignItems="Center" width="45%" justifyContent="Start">
-                  <VBox alignItems="Center">
-                    <Text text="{dlg>summonerName}"
-                          width="8rem"
+                <!-- ESQUERDA: Nome em cima, campeão abaixo, spells embaixo -->
+                <VBox width="45%" alignItems="Start">
+                  <VBox class="playerBox" alignItems="Center">
+                    <Link text="{dlg>summonerName}"
+                          class="sapMLnk playerLink playerName"
                           wrapping="false"
-                          textAlign="Center"
-                          class="sapUiTinyMarginTop"/>
-                    <Image src="{dlg>championImg}" width="45px" height="45px" class="sapUiTinyMarginEnd"/>
-                    <HBox alignItems="Center" justifyContent="Center" class="sapUiTinyMarginTop">
-                        <Image src="{dlg>spell1_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
-                        <Image src="{dlg>spell2_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
-                        <Image src="{dlg>rune_img}" width="22px" height="22px" />
-                    </HBox>                    
+                          press=".onAbrirHistoricoJogador"/>
+                    <Image src="{dlg>championImg}" tooltip="{dlg>champion}" width="45px" height="45px"/>
+                    <HBox alignItems="Center" justifyContent="Center" class="sapUiTinyMarginTop" renderType="Bare">
+                      <Image src="{dlg>spell1_img}" tooltip="{dlg>spell1_name}"  width="20px" height="20px" class="sapUiTinyMarginEnd"/>
+                      <Image src="{dlg>spell2_img}" tooltip="{dlg>spell2_name}"  width="20px" height="20px" class="sapUiTinyMarginEnd"/>
+                      <Image src="{dlg>rune_img}"   tooltip="{dlg>runeMainName}" width="22px" height="22px"/>
+                    </HBox>
                   </VBox>
-                </HBox>
+                </VBox>
 
-                <!-- Stats + Itens (direita) -->
+                <!-- DIREITA: KDA + itens -->
                 <VBox width="55%" alignItems="End">
-                  <HBox>
+                  <HBox renderType="Bare">
                     <Text text="{dlg>kda}" class="sapUiSmallMarginEnd"/>
                   </HBox>
 
-                  <!-- Linha de itens -->
                   <HBox justifyContent="End" class="sapUiTinyMarginTop" renderType="Bare">
                     <HBox class="itemSlot"><Image src="{dlg>itemsImgs/0}" visible="{= !!${dlg>itemsImgs/0} }"/></HBox>
                     <HBox class="itemSlot"><Image src="{dlg>itemsImgs/1}" visible="{= !!${dlg>itemsImgs/1} }"/></HBox>
@@ -61,7 +59,7 @@
 
         <!-- ================= TIME VERMELHO ================= -->
         <VBox width="47%">
-          <Title text="Time Vermelho" level="H4" class="sapUiSmallMarginBottom"/>
+          <Title text="Time Vermelho" level="H4" width="100%" textAlign="End" class="sapUiSmallMarginBottom titleRed"/>
           <VBox items="{dlg>/team200}">
             <items>
               <HBox alignItems="Center"
@@ -69,13 +67,12 @@
                     class="sapUiTinyMarginBottom playerRow"
                     width="100%">
 
-                <!-- Stats + Itens (esquerda) -->
+                <!-- ESQUERDA: KDA + itens -->
                 <VBox width="55%" alignItems="Start">
-                  <HBox>
+                  <HBox renderType="Bare">
                     <Text text="{dlg>kda}" class="sapUiSmallMarginBegin"/>
                   </HBox>
 
-                  <!-- Linha de itens -->
                   <HBox justifyContent="Start" class="sapUiTinyMarginTop" renderType="Bare">
                     <HBox class="itemSlot"><Image src="{dlg>itemsImgs/0}" visible="{= !!${dlg>itemsImgs/0} }"/></HBox>
                     <HBox class="itemSlot"><Image src="{dlg>itemsImgs/1}" visible="{= !!${dlg>itemsImgs/1} }"/></HBox>
@@ -87,22 +84,21 @@
                   </HBox>
                 </VBox>
 
-                <!-- Campeão + Nome (direita) -->
-                <HBox alignItems="Center" width="45%" justifyContent="End">
-                  <VBox alignItems="Center">
-                    <Text text="{dlg>summonerName}"
-                          width="8rem"
+                <!-- DIREITA: Nome em cima, campeão abaixo, spells embaixo -->
+                <VBox width="45%" alignItems="End">
+                  <VBox class="playerBox" alignItems="Center">
+                    <Link text="{dlg>summonerName}"
+                          class="sapMLnk playerLink playerName"
                           wrapping="false"
-                          textAlign="Center"
-                          class="sapUiTinyMarginTop"/>
-                    <Image src="{dlg>championImg}" width="45px" height="45px" class="sapUiTinyMarginEnd"/>
-                    <HBox alignItems="Center" justifyContent="Center" class="sapUiTinyMarginTop">
-                        <Image src="{dlg>spell1_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
-                        <Image src="{dlg>spell2_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
-                        <Image src="{dlg>rune_img}" width="22px" height="22px" />
+                          press=".onAbrirHistoricoJogador"/>
+                    <Image src="{dlg>championImg}" tooltip="{dlg>champion}" width="45px" height="45px"/>
+                    <HBox alignItems="Center" justifyContent="Center" class="sapUiTinyMarginTop" renderType="Bare">
+                      <Image src="{dlg>rune_img}"   tooltip="{dlg>runeMainName}" width="22px" height="22px"/>
+                      <Image src="{dlg>spell1_img}" tooltip="{dlg>spell1_name}"  width="20px" height="20px" class="sapUiTinyMarginBegin"/>
+                      <Image src="{dlg>spell2_img}" tooltip="{dlg>spell2_name}"  width="20px" height="20px" class="sapUiTinyMarginBegin"/>
                     </HBox>
                   </VBox>
-                </HBox>
+                </VBox>
 
               </HBox>
             </items>
