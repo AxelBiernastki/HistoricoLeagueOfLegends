@@ -232,5 +232,56 @@ sap.ui.define([
                 );
             }
         },
+
+        // Chamada de Detalhes 
+
+        _callDetalhePartida: async function(matchId, region) {
+            const oModel = this.getView().getModel();
+            const oCtx = oModel.bindContext("/detalhePartida(...)");
+            oCtx.setParameter("matchId", matchId);
+            oCtx.setParameter("region", region);
+            await oCtx.execute();
+            const data = await oCtx.requestObject();
+            const obj = (data !== undefined) ? data : oCtx.getBoundContext().getObject();
+            return Array.isArray(obj) ? obj : (obj?.value ?? []);
+        },
+
+        // -- Abre o Fragment
+        onAbrirDetalhe: async function (oEvent) {
+            try {
+                const ctxObj = oEvent.getSource().getBindingContext("vm").getObject();
+                const matchId = ctxObj.matchId;
+                const region = ctxObj.resolvedRegion || this.byId("selRegion").getSelectedKey();
+
+                this._setBusy(true);
+                const parts = await this._callDetalhePartida(matchId, region);
+
+                const team100 = parts.filter(p => p.teamId === 100);
+                const team200 = parts.filter(p => p.teamId === 200);
+
+                if(!this._oDetDlg) {
+                    this._oDetDlg = await this.loadFragment({
+                        name: "historico.lol.leagueoflegends.view.MatchDetail"
+                    });
+                    this.getView().addDependent(this._oDetDlg);
+                }
+                const dlgModel = new JSONModel({
+                    title: `Partida de ${ctxObj.champion} • ${ctxObj.gameType || ''}`,
+                    team100,
+                    team200
+                });
+                this._oDetDlg.setModel(dlgModel, "dlg");
+                this._oDetDlg.open();
+            } catch (e) {
+                console.error("[View1] detalhe erro:", e);
+                MessageBox.error("Falha ao carregar detalhe da partida. \n\n" + (e?.message || ""));
+            } finally {
+                this._setBusy(false);
+            }
+        },
+
+        onFecharDetalhe: function() {
+            if(this._oDetDlg) this._oDetDlg.close();
+        }
     });
 });

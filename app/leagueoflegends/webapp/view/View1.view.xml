@@ -102,17 +102,17 @@
   </columns>
 
   <items>
-    <ColumnListItem>
+    <ColumnListItem type="Active" press=".onAbrirDetalhe">
 
       <VBox alignItems="Center">
-  <HBox alignItems="Center">
-    <Image src="{vm>championImg}" width="43px" height="40px" tooltip="{vm>champion}"/>
-  </HBox>
-  <HBox alignItems="Center" justifyContent="Start">
-    <Image src="{vm>spell1_img}" width="18px" height="18px"  tooltip="{vm>spell1_name}"/>
-    <Image src="{vm>spell2_img}" width="18px" height="18px" class="sapUiTinyMarginBegin" tooltip="{vm>spell2_name}"/>
-  </HBox>
-</VBox>
+        <HBox alignItems="Center">
+          <Image src="{vm>championImg}" width="43px" height="40px" tooltip="{vm>champion}"/>
+        </HBox>
+        <HBox alignItems="Center" justifyContent="Start">
+          <Image src="{vm>spell1_img}" width="18px" height="18px"  tooltip="{vm>spell1_name}"/>
+          <Image src="{vm>spell2_img}" width="18px" height="18px" class="sapUiTinyMarginBegin" tooltip="{vm>spell2_name}"/>
+        </HBox>
+      </VBox>
 
       
       <ObjectStatus text="{vm>result}" state="{= ${vm>result} === 'Win' ? 'Success' : 'Error' }"/>

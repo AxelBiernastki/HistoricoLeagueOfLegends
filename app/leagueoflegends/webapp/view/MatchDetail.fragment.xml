@@ -1,0 +1,119 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog id="dlgMatchDetail"
+          title="{dlg>/title}"
+          contentWidth="1000px"
+          contentHeight="770px"
+          stretch="{= ${device>/system/phone} }"
+          class="sapUiNoContentPadding fragmentteste">
+
+    <VBox class="sapUiSmallMargin" fitContainer="true">
+      <HBox justifyContent="SpaceAround" renderType="Bare" width="100%">
+
+        <!-- ================= TIME AZUL ================= -->
+        <VBox width="47%">
+          <Title text="Time Azul" level="H4" class="sapUiSmallMarginBottom"/>
+          <VBox items="{dlg>/team100}">
+            <items>
+              <HBox alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    class="sapUiTinyMarginBottom playerRow"
+                    width="100%">
+
+                <!-- Campeão + Nome (esquerda) -->
+                <HBox alignItems="Center" width="45%" justifyContent="Start">
+                  <VBox alignItems="Center">
+                    <Text text="{dlg>summonerName}"
+                          width="8rem"
+                          wrapping="false"
+                          textAlign="Center"
+                          class="sapUiTinyMarginTop"/>
+                    <Image src="{dlg>championImg}" width="45px" height="45px" class="sapUiTinyMarginEnd"/>
+                    <HBox alignItems="Center" justifyContent="Center" class="sapUiTinyMarginTop">
+                        <Image src="{dlg>spell1_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
+                        <Image src="{dlg>spell2_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
+                        <Image src="{dlg>rune_img}" width="22px" height="22px" />
+                    </HBox>                    
+                  </VBox>
+                </HBox>
+
+                <!-- Stats + Itens (direita) -->
+                <VBox width="55%" alignItems="End">
+                  <HBox>
+                    <Text text="{dlg>kda}" class="sapUiSmallMarginEnd"/>
+                  </HBox>
+
+                  <!-- Linha de itens -->
+                  <HBox justifyContent="End" class="sapUiTinyMarginTop" renderType="Bare">
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/0}" visible="{= !!${dlg>itemsImgs/0} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/1}" visible="{= !!${dlg>itemsImgs/1} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/2}" visible="{= !!${dlg>itemsImgs/2} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/3}" visible="{= !!${dlg>itemsImgs/3} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/4}" visible="{= !!${dlg>itemsImgs/4} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/5}" visible="{= !!${dlg>itemsImgs/5} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/6}" visible="{= !!${dlg>itemsImgs/6} }"/></HBox>
+                  </HBox>
+                </VBox>
+
+              </HBox>
+            </items>
+          </VBox>
+        </VBox>
+
+        <!-- ================= TIME VERMELHO ================= -->
+        <VBox width="47%">
+          <Title text="Time Vermelho" level="H4" class="sapUiSmallMarginBottom"/>
+          <VBox items="{dlg>/team200}">
+            <items>
+              <HBox alignItems="Center"
+                    justifyContent="SpaceBetween"
+                    class="sapUiTinyMarginBottom playerRow"
+                    width="100%">
+
+                <!-- Stats + Itens (esquerda) -->
+                <VBox width="55%" alignItems="Start">
+                  <HBox>
+                    <Text text="{dlg>kda}" class="sapUiSmallMarginBegin"/>
+                  </HBox>
+
+                  <!-- Linha de itens -->
+                  <HBox justifyContent="Start" class="sapUiTinyMarginTop" renderType="Bare">
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/0}" visible="{= !!${dlg>itemsImgs/0} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/1}" visible="{= !!${dlg>itemsImgs/1} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/2}" visible="{= !!${dlg>itemsImgs/2} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/3}" visible="{= !!${dlg>itemsImgs/3} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/4}" visible="{= !!${dlg>itemsImgs/4} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/5}" visible="{= !!${dlg>itemsImgs/5} }"/></HBox>
+                    <HBox class="itemSlot"><Image src="{dlg>itemsImgs/6}" visible="{= !!${dlg>itemsImgs/6} }"/></HBox>
+                  </HBox>
+                </VBox>
+
+                <!-- Campeão + Nome (direita) -->
+                <HBox alignItems="Center" width="45%" justifyContent="End">
+                  <VBox alignItems="Center">
+                    <Text text="{dlg>summonerName}"
+                          width="8rem"
+                          wrapping="false"
+                          textAlign="Center"
+                          class="sapUiTinyMarginTop"/>
+                    <Image src="{dlg>championImg}" width="45px" height="45px" class="sapUiTinyMarginEnd"/>
+                    <HBox alignItems="Center" justifyContent="Center" class="sapUiTinyMarginTop">
+                        <Image src="{dlg>spell1_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
+                        <Image src="{dlg>spell2_img}" width="20px" height="20px" class="sapUiTinyMarginEnd"/>
+                        <Image src="{dlg>rune_img}" width="22px" height="22px" />
+                    </HBox>
+                  </VBox>
+                </HBox>
+
+              </HBox>
+            </items>
+          </VBox>
+        </VBox>
+
+      </HBox>
+    </VBox>
+
+    <endButton>
+      <Button text="Fechar" press="onFecharDetalhe"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

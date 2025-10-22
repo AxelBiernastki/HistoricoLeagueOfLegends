@@ -2,20 +2,20 @@ const cds = require('@sap/cds');
 
 
 
-const REGIONAL_HOSTS = new Set(['americas','europe','asia','sea']);
+const REGIONAL_HOSTS = new Set(['americas', 'europe', 'asia', 'sea']);
 
 const PLATFORM_TO_REGION = {
   // Américas
-  BR1:'americas', NA1:'americas', LA1:'americas', LA2:'americas',
+  BR1: 'americas', NA1: 'americas', LA1: 'americas', LA2: 'americas',
   // Europa
-  EUW1:'europe', EUN1:'europe', TR1:'europe', RU:'europe',
+  EUW1: 'europe', EUN1: 'europe', TR1: 'europe', RU: 'europe',
   // Ásia
-  KR:'asia', JP1:'asia',
+  KR: 'asia', JP1: 'asia',
   // Oceania + SEA (v2)
-  OC1:'sea', SG2:'sea', PH2:'sea', TH2:'sea', TW2:'sea', VN2:'sea',
+  OC1: 'sea', SG2: 'sea', PH2: 'sea', TH2: 'sea', TW2: 'sea', VN2: 'sea',
 };
 
-const REGIONAL_PROBE_ORDER = ['americas','europe','asia','sea'];
+const REGIONAL_PROBE_ORDER = ['americas', 'europe', 'asia', 'sea'];
 
 const QUEUE_LABEL = {
   420: "Ranked Solo/Duo",
@@ -43,6 +43,53 @@ const SUMMONER_SPELLS = {
   14: { name: "Ignite", file: "SummonerDot.png" },
   21: { name: "Barrier", file: "SummonerBarrier.png" },
 };
+
+// --- Mapa básico de Runas ---
+const RUNES = {
+  // Precision
+  8005: "Precision/PressTheAttack/PressTheAttack.png",
+  8008: "Precision/LethalTempo/LethalTempoTemp.png",
+  8010: "Precision/Conqueror/Conqueror.png",
+  8021: "Precision/FleetFootwork/FleetFootwork.png",
+
+  // Domination
+  8112: "Domination/Electrocute/Electrocute.png",
+  8124: "Domination/Predator/Predator.png",
+  8128: "Domination/DarkHarvest/DarkHarvest.png",
+  9923: "Domination/HailOfBlades/HailOfBlades.png",
+
+  // Sorcery
+  8214: "Sorcery/SummonAery/SummonAery.png",
+  8229: "Sorcery/ArcaneComet/ArcaneComet.png",
+  8230: "Sorcery/PhaseRush/PhaseRush.png",
+
+  // Resolve
+  8437: "Resolve/GraspOfTheUndying/GraspOfTheUndying.png",
+  8439: "Resolve/Aftershock/Aftershock.png",
+  8465: "Resolve/Guardian/Guardian.png",
+
+  // Inspiration
+  8351: "Inspiration/GlacialAugment/GlacialAugment.png",
+  8360: "Inspiration/UnsealedSpellbook/UnsealedSpellbook.png",
+  8369: "Inspiration/FirstStrike/FirstStrike.png",
+};
+
+function runeImgUrl(perkId) {
+  const file = RUNES[perkId];
+  if (file) return `https://ddragon.canisback.com/img/perk-images/Styles/${file}`;
+
+  // fallback: tenta inferir o estilo pela faixa de ID
+  let base = "";
+  if (perkId >= 8000 && perkId < 8100) base = "Precision";
+  else if (perkId >= 8100 && perkId < 8200) base = "Domination";
+  else if (perkId >= 8200 && perkId < 8300) base = "Sorcery";
+  else if (perkId >= 8300 && perkId < 8400) base = "Inspiration";
+  else if (perkId >= 8400 && perkId < 8500) base = "Resolve";
+
+  // se não souber o arquivo exato, retorna vazio (front usa placeholder)
+  return base ? "" : "";
+}
+
 
 // --- patch do Data Dragon a partir de info.gameVersion ---
 function patchFrom(gameVersion) {
@@ -86,14 +133,14 @@ function hostFor(input) {
   const s = String(input || '').trim();
   if (!s) return 'americas';
   const low = s.toLowerCase();
-  if (REGIONAL_HOSTS.has(low)) return low;        
+  if (REGIONAL_HOSTS.has(low)) return low;
   const up = s.toUpperCase();
-  return PLATFORM_TO_REGION[up] || 'americas';    
+  return PLATFORM_TO_REGION[up] || 'americas';
 }
 
 async function tryGetAccountAt(region, gameName, tagLine, log) {
   const base = `https://${region}.api.riotgames.com`;
-  const url  = `${base}/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}`;
+  const url = `${base}/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}`;
   try {
     return await getJson(url, log);               // { puuid, ... }
   } catch (e) {
@@ -149,6 +196,12 @@ async function getJson(url, log) {
   return json;
 }
 
+function itemImgUrl(itemId, gameVersion) {
+  if (!itemId) return "";
+  const patch = patchFrom(gameVersion);
+  return `https://ddragon.leagueoflegends.com/cdn/${patch}/img/item/${itemId}.png`
+}
+
 module.exports = cds.service.impl((srv) => {
   srv.on('ultimasPartidas', async (req) => {
     const reqId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
@@ -176,7 +229,7 @@ module.exports = cds.service.impl((srv) => {
       }
 
       const puuid = account.puuid;
-      const base  = `https://${reg}.api.riotgames.com`;
+      const base = `https://${reg}.api.riotgames.com`;
       log.info('Região final:', reg, 'Base URL:', base, 'PUUID:', puuid);
 
       // 2) IDs de partidas
@@ -214,19 +267,19 @@ module.exports = cds.service.impl((srv) => {
           const parts = Array.isArray(info.participants) ? info.participants : [];
           const me = parts.find(p => p && p.puuid === puuid) || {};
 
-          const kills   = Number(me.kills ?? 0);
-          const deaths  = Number(me.deaths ?? 0);
+          const kills = Number(me.kills ?? 0);
+          const deaths = Number(me.deaths ?? 0);
           const assists = Number(me.assists ?? 0);
-          const kda     = deaths === 0 ? (kills + assists) : (kills + assists) / deaths;
-          const kdaStr  = `${kills}/${deaths}/${assists} (${kda.toFixed(1)})`;
+          const kda = deaths === 0 ? (kills + assists) : (kills + assists) / deaths;
+          const kdaStr = `${kills}/${deaths}/${assists} (${kda.toFixed(1)})`;
 
           const gameDurationSec = Number(info.gameDuration ?? 0);
-          const durationMin     = Math.max(1, Math.round(gameDurationSec / 60));
-          const gameStartMs     = Number(info.gameStartTimestamp ?? 0);
-          const queueId         = Number(info.queueId ?? 0);
-          const gameType        = QUEUE_LABEL[queueId] || (queueId ? `Queue ${queueId}` : '—');
+          const durationMin = Math.max(1, Math.round(gameDurationSec / 60));
+          const gameStartMs = Number(info.gameStartTimestamp ?? 0);
+          const queueId = Number(info.queueId ?? 0);
+          const gameType = QUEUE_LABEL[queueId] || (queueId ? `Queue ${queueId}` : '—');
 
-          const champion    = String(me.championName ?? '—');
+          const champion = String(me.championName ?? '—');
           const gameVersion = info.gameVersion;
           const championImg = championImgUrl(champion, gameVersion);
 
@@ -243,15 +296,16 @@ module.exports = cds.service.impl((srv) => {
 
             spell1_id: s1,
             spell1_name: (SUMMONER_SPELLS[s1]?.name) || "",
-            spell1_img:  spellImgUrl(s1, gameVersion),
+            spell1_img: spellImgUrl(s1, gameVersion),
 
             spell2_id: s2,
             spell2_name: (SUMMONER_SPELLS[s2]?.name) || "",
-            spell2_img:  spellImgUrl(s2, gameVersion),
+            spell2_img: spellImgUrl(s2, gameVersion),
 
             gameType,
             gameStart: gameStartMs ? new Date(gameStartMs).toISOString() : null,
-            lpDelta: null
+            lpDelta: null,
+            resolvedRegion: reg
           };
         })
         .sort((a, b) => {
@@ -282,6 +336,73 @@ module.exports = cds.service.impl((srv) => {
         return req.reject(500, 'RIOT_API_KEY não configurada no ambiente.');
       }
       return req.reject(500, `Erro inesperado ao chamar Riot API: ${e && e.message ? e.message : 'sem detalhes'}`);
+    }
+  });
+
+  srv.on('detalhePartida', async (req) => {
+    const log = mkLog(`DET-${Date.now().toString(36)}`);
+    const { matchId, region } = req.data || {};
+    if (!matchId) return req.reject(400, 'matchId obrigatório');
+
+    const reg = hostFor(region);
+    const base = `https://${reg}.api.riotgames.com`;
+    const url = `${base}/lol/match/v5/matches/${encodeURIComponent(matchId)}`;
+
+    try {
+      const m = await getJson(url, log);
+      const info = m?.info;
+      const parts = Array.isArray(info?.participants) ? info.participants : [];
+      const patch = info?.gameVersion;
+
+      const list = parts.map(p => {
+        const k = Number(p.kills ?? 0);
+        const d = Number(p.deaths ?? 0);
+        const a = Number(p.assists ?? 0);
+        const kdaVal = d === 0 ? (k + a) : (k + a) / d;
+
+        // SEMPRE sete slots
+        const slotIds = [
+          Number(p.item0) || 0,
+          Number(p.item1) || 0,
+          Number(p.item2) || 0,
+          Number(p.item3) || 0,
+          Number(p.item4) || 0,
+          Number(p.item5) || 0,
+          Number(p.item6) || 0,
+        ];
+        // url ou string vazia (placeholder será aplicado no front)
+        const itemsImgs = slotIds.map(id => id > 0 ? itemImgUrl(id, patch) : "");
+
+        // spells
+        const s1 = Number(p.summoner1Id ?? 0);
+        const s2 = Number(p.summoner2Id ?? 0);
+
+        // runa principal (primeira seleção do primeiro estilo)
+        const primary = (p.perks?.styles || []).find(s => s?.description === "primaryStyle") || p.perks?.styles?.[0];
+        const runeMain = primary?.selections?.[0]?.perk;
+        const spell1_img = spellImgUrl(Number(p.summoner1Id || 0), patch);
+        const spell2_img = spellImgUrl(Number(p.summoner2Id || 0), patch);
+        const rune_img = runeImgUrl(Number(runeMain || 0));
+
+        return {
+          teamId: Number(p.teamId ?? 0),
+          win: !!p.win,
+          summonerName: String(p.riotIdGameName || p.summonerName || '—'),
+          champion: String(p.championName || '—'),
+          championImg: championImgUrl(p.championName, patch),
+          kda: `${k}/${d}/${a} (${kdaVal.toFixed(1)})`,
+          itemsImgs,
+          spell1_img,
+          spell2_img,
+          rune_img
+        };
+
+      });
+
+      return list.sort((a, b) => (a.teamId - b.teamId) || (b.kda.localeCompare(a.kda)));
+    } catch (e) {
+      if (e?.status) return req.reject(e.status, e.message);
+      return req.reject(500, e?.message || 'Erro ao buscar detalhe da partida.');
     }
   });
 });
