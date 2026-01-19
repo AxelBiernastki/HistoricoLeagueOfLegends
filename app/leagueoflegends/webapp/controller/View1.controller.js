@@ -189,7 +189,7 @@ sap.ui.define([
                 const region = options.forceRegion || this.byId("selRegion").getSelectedKey();
 
                 const parsed = this._parseRiotId(riotId);
-                if (!parsed) { MessageToast.show("Use o formato: NickName#Tag (ex.: Tio Axel#BnTk)"); return; }
+                if (!parsed) { MessageToast.show("Use o formato: Nick do jogador #Tag (ex.: Faker #BR1)"); return; }
 
                 try {
                     this._setBusy(true);

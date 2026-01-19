@@ -1,7 +1,5 @@
 const cds = require('@sap/cds');
 
-
-
 const REGIONAL_HOSTS = new Set(['americas', 'europe', 'asia', 'sea']);
 
 const PLATFORM_TO_REGION = {

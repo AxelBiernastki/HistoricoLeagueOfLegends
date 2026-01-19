@@ -68,6 +68,8 @@
           <Button text="Buscar" class="sapUiTinyMarginBegin" press=".onBuscar" enabled="{= !${vm>/busy} }"/>
         </HBox>
 <VBox width="100%" alignItems="Center"> 
+
+
         <Table id="tblMatches" width="60rem" fixedLayout="true" items="{vm>/rows}" class="sapUiSmallMarginTop myFixedTable" growing="true" growingScrollToLoad="true">
   <headerToolbar >
     <Toolbar class="headerTabela">
@@ -125,9 +127,9 @@
 
       <Text text="{vm>gameType}" />
     
-    </ColumnListItem>
-  </items>
-</Table>
+      </ColumnListItem>
+    </items>
+  </Table>
 </VBox>
 
       </VBox>
