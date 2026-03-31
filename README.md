@@ -5,7 +5,7 @@
       <td><img width="48" src="https://img.icons8.com/color/48/riot-games.png" alt="RiotGames-Icon"/></td>
       <td><img src="https://cap.cloud.sap/docs/logos/cap.svg" width="55" alt="CAP-Icon"/></a></td>
       <td><img src="https://ui5.sap.com/resources/sap/ui/documentation/sdk/images/sap-ui5-logo.svg" width="50" alt="UI5-Icon"/></a></td>
-    <td><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" width="60" alt="UI5-Icon"/></a></td>
+    <td><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" width="60" alt="NodeJs-Icon"/></a></td>
     </tr>
   </table>
 </div>
