@@ -1,6 +1,16 @@
 # League of Legends Match History
+<div align="center">
+  <table>
+    <tr>
+      <td><img width="48" src="https://img.icons8.com/color/48/riot-games.png" alt="RiotGames-Icon"/></td>
+      <td><img src="https://cap.cloud.sap/docs/logos/cap.svg" width="55" alt="CAP-Icon"/></a></td>
+      <td><img src="https://ui5.sap.com/resources/sap/ui/documentation/sdk/images/sap-ui5-logo.svg" width="50" alt="UI5-Icon"/></a></td>
+    <td><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" width="60" alt="UI5-Icon"/></a></td>
+    </tr>
+  </table>
+</div>
 
-Aplicação web desenvolvida com **SAP CAP** e **SAPUI5 / Fiori** para consultar o histórico recente de partidas de jogadores de **League of Legends** a partir do **Riot ID**.
+> Aplicação web desenvolvida com **SAP CAP** e **SAPUI5 / Fiori** para consultar o histórico recente de partidas de jogadores de **League of Legends** a partir do **Riot ID**.
 
 ## Principais funcionalidades
 
@@ -57,7 +67,7 @@ Serviço CAP responsável por consumir a **Riot API**, processar os dados recebi
 
 ## Endpoints / Funções disponíveis
 
-### LolService
+### LoLService
 
 - `ultimasPartidas(gameName, tagLine, region)`
 - `detalhePartida(matchId, region)`
@@ -93,7 +103,8 @@ Crie um arquivo .env na raiz do projeto com a variável:
 RIOT_API_KEY=
 ```
 A Riot disponibiliza chaves de API no seu site oficial:
-``https://developer.riotgames.com/apis``
+[https://developer.riotgames.com/apis
+](https://developer.riotgames.com/apis)
 
 ### 4. Executar a aplicação
 
